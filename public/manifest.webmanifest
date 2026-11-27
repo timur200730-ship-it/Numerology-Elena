@@ -1,0 +1,19 @@
+{
+  "name": "Нумерология Елены Осинцевой",
+  "short_name": "Нумерология",
+  "description": "Авторская нумерология Елены Осинцевой",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbf9fc",
+  "theme_color": "#9478c9",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
