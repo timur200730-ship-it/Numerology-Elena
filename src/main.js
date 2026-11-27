@@ -149,9 +149,8 @@ function renderResult(data) {
         <h2 class="interpretations-heading">Расшифровка вашей матрицы</h2>
         <p class="interpretations-intro">Ниже представлены символические трактовки по количеству каждой цифры в матрице.</p>
         <div class="interpretations-list">${interpretationRows}</div>
-        <p class="draft-notice">${escapeHtml(interpretationLibrary.meta.status)}. Материалы подготовлены для обсуждения и утверждения автором курса.</p>
       </div>
-      <p class="report-note">Расчёт выполнен по правилам, переданным для авторского курса. Нумерологическая интерпретация является частью авторской системы и не заменяет медицинскую, психологическую, юридическую или финансовую консультацию.</p>
+      <p class="report-note">Нумерологическая интерпретация является частью авторской системы и не заменяет медицинскую, психологическую, юридическую или финансовую консультацию.</p>
       <div class="report-signature">Елена Осинцева <span>Автор курса «Тайны Нумерологии»</span></div>
     </article>
     <div class="result-actions">
