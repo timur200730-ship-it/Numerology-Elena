@@ -1,4 +1,5 @@
 import { calculateMatrix, formatDate } from "./numerology.js";
+import interpretationLibrary from "./data/interpretations.json";
 import "./styles.css";
 
 const app = document.querySelector("#app");
@@ -82,6 +83,26 @@ function renderResult(data) {
     <div class="digit-row"><span>Цифра ${digit}</span><b>${count ? digit.repeat(count) : "—"}</b><small>${count} ${count === 1 ? "раз" : count >= 2 && count <= 4 ? "раза" : "раз"}</small></div>
   `).join("");
 
+  const interpretationRows = Object.entries(data.counts).map(([digit, count]) => {
+    const digitInfo = interpretationLibrary.digits[digit];
+    const level = digitInfo?.levels[String(count)];
+    if (!level) return `
+      <section class="interpretation-item interpretation-warning">
+        <div class="interpretation-title"><span class="interpretation-digit">${digit}</span><div><h3>Цифра ${digit} · ${escapeHtml(digitInfo?.title || "")}</h3><small>Количество: ${count}</small></div></div>
+        <p>Для этого количества пока нет подготовленной трактовки. Требуется проверка библиотеки.</p>
+      </section>`;
+    return `
+      <section class="interpretation-item">
+        <div class="interpretation-title"><span class="interpretation-digit">${digit}</span><div><h3>Цифра ${digit} · ${escapeHtml(digitInfo.title)}</h3><small>Количество в матрице: ${count}</small></div></div>
+        <div class="interpretation-block"><h4>Основная трактовка</h4><p>${escapeHtml(level.main)}</p></div>
+        <div class="interpretation-columns">
+          <div><h4>Сильные стороны</h4><p>${escapeHtml(level.strengths)}</p></div>
+          <div><h4>Возможные трудности</h4><p>${escapeHtml(level.difficulties)}</p></div>
+        </div>
+        <div class="interpretation-advice"><h4>Рекомендация</h4><p>${escapeHtml(level.recommendation)}</p></div>
+      </section>`;
+  }).join("");
+
   result.innerHTML = `
     <article class="report-sheet" id="report-sheet">
       <div class="report-brand">
@@ -122,6 +143,13 @@ function renderResult(data) {
       <div class="card digit-card">
         <div class="section-kicker">КОЛИЧЕСТВО КАЖДОЙ ЦИФРЫ</div>
         <div class="digit-list">${digitRows}</div>
+      </div>
+      <div class="card interpretations-card">
+        <div class="section-kicker">ИНДИВИДУАЛЬНЫЕ ТРАКТОВКИ</div>
+        <h2 class="interpretations-heading">Расшифровка вашей матрицы</h2>
+        <p class="interpretations-intro">Ниже представлены символические трактовки по количеству каждой цифры в матрице.</p>
+        <div class="interpretations-list">${interpretationRows}</div>
+        <p class="draft-notice">${escapeHtml(interpretationLibrary.meta.status)}. Материалы подготовлены для обсуждения и утверждения автором курса.</p>
       </div>
       <p class="report-note">Расчёт выполнен по правилам, переданным для авторского курса. Нумерологическая интерпретация является частью авторской системы и не заменяет медицинскую, психологическую, юридическую или финансовую консультацию.</p>
       <div class="report-signature">Елена Осинцева <span>Автор курса «Тайны Нумерологии»</span></div>
